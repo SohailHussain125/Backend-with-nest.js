@@ -3,6 +3,7 @@ import { ResponseResgistrationType, ResgistrationType, loginType } from './dto/a
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
+
 @Injectable()
 export class AuthenticationService {
   constructor(
@@ -37,14 +38,13 @@ export class AuthenticationService {
 
   async login(user: loginType) {
     const { userName, password } = user;
-    const isExistUser = await this.AthenticationModal.findOne({ userName });
+    let isExistUser = await this.AthenticationModal.findOne({ userName });
     if (isExistUser) {
       const isMatch = await bcrypt.compare(password, isExistUser.hash);
       if (isMatch) {
-        return user
+        return isExistUser
       }
       else throw new NotFoundException(`Invalid user name or password`);
-
     }
     else {
       throw new NotFoundException(`user does not exist`);
@@ -53,3 +53,4 @@ export class AuthenticationService {
 
   }
 }
+

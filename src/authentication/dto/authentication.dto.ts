@@ -1,4 +1,4 @@
-import { IsNotEmpty } from "class-validator";
+import { IsNotEmpty, IsString, Matches, MaxLength, MinLength} from "class-validator";
 
 export class ResgistrationType {
     @IsNotEmpty()
@@ -10,7 +10,11 @@ export class ResgistrationType {
     @IsNotEmpty()
     userName: string;
 
-    @IsNotEmpty()
+    
+    @IsString()
+    @MinLength(4)
+    @MaxLength(20)
+    @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {message: 'password too weak'})
     password: string;
 }
 
@@ -28,4 +32,12 @@ export class loginType {
     userName: string;
     @IsNotEmpty()
     password: string
+}
+
+
+export class loginTypeResponse {
+    _id: string;
+    firstName: string;
+    lastName: string;
+    userName: string;
 }
