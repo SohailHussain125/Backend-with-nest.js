@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Param, Body, UploadedFile, UseInterceptors ,BadRequestException} from "@nestjs/common";
+import { Controller, Get, Post, Param, Body, UploadedFile, UseInterceptors ,BadRequestException, UseGuards} from "@nestjs/common";
 import { ResgistrationType, ResponseResgistrationType, loginType, loginTypeResponse } from './dto/authentication.dto';
 import { AuthenticationService } from './authentication.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from "multer";
+import { AuthGuard } from "@nestjs/passport";
 
 
 
@@ -21,6 +22,7 @@ export class AuthenticationController {
 
 
     // Login end point
+    @UseGuards(AuthGuard('local'))
     @Post('/login')
     async login(
         @Body() body: loginType
