@@ -2,11 +2,12 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthenticationController } from './authentication.controller';
 import { AuthenticationService } from './authentication.service';
-import { Auth,AuthenticationSchema } from './authentication.model';
-
+import { AuthenticationSchema } from './authentication.model';
+import { PassportModule } from '@nestjs/passport';
+import { LocalStrategy } from './local.strategy';
 @Module({
-  imports: [MongooseModule.forFeature([{ name: 'Users', schema: AuthenticationSchema }])],
+  imports: [PassportModule, MongooseModule.forFeature([{ name: 'Users', schema: AuthenticationSchema }])],
   controllers: [AuthenticationController],
-  providers: [AuthenticationService],
+  providers: [AuthenticationService, LocalStrategy],
 })
-export class AuthsModule {}
+export class AuthsModule { }

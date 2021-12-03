@@ -49,8 +49,17 @@ export class AuthenticationService {
     else {
       throw new NotFoundException(`user does not exist`);
     }
-
-
   }
+
+  async validateUser(userName: string, pass: string): Promise<any> {
+    const user = await this.AthenticationModal.findOne({ userName });
+    const isMatch = await bcrypt.compare(pass, user.hash);
+    if (user && isMatch) {
+      const { ...result } = user;
+      return result;
+    }
+    return null;
+  }
+
 }
 

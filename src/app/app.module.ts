@@ -3,7 +3,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthsModule } from 'src/authentication/authentication.module';
 
 @Module({
-  imports: [AuthsModule,MongooseModule.forRoot("mongodb+srv://user:Q3JzizdgvdmhbOgI@cluster0.wcwi2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority") ],
+  imports: [AuthsModule,
+    MongooseModule.forRoot("mongodb+srv://user:Q3JzizdgvdmhbOgI@cluster0.wcwi2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority") ],
   controllers:[],
   providers:[]
 })
