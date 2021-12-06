@@ -13,7 +13,7 @@ export class Auth {
   lastName: string;
 
   @Prop()
-  userName: string;
+  username: string;
 
   
   @Prop()

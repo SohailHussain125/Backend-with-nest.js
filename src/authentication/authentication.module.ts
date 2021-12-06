@@ -5,6 +5,7 @@ import { AuthenticationService } from './authentication.service';
 import { AuthenticationSchema } from './authentication.model';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './local.strategy';
+
 @Module({
   imports: [PassportModule, MongooseModule.forFeature([{ name: 'Users', schema: AuthenticationSchema }])],
   controllers: [AuthenticationController],

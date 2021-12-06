@@ -15,15 +15,15 @@ export class AuthenticationService {
   private readonly users: ResponseResgistrationType[] = [];
 
   async registeration(user: ResgistrationType) {
-    const { password, userName } = user;
-    const isExistUser = await this.AthenticationModal.findOne({ userName });
+    const { password, username } = user;
+    const isExistUser = await this.AthenticationModal.findOne({ username });
     try {
 
       if (isExistUser) {
-        throw 'Username "' + userName + '" is already taken';
+        throw 'Username "' + username + '" is already taken';
       }
     } catch (error) {
-      throw new NotFoundException(` Username ${userName} is already taken`);
+      throw new NotFoundException(` Username ${username} is already taken`);
     }
     const registeredUser = new this.AthenticationModal(user);
     // hash password
@@ -36,9 +36,11 @@ export class AuthenticationService {
     return userResponse;
   }
 
-  async login(user: loginType) {
-    const { userName, password } = user;
-    let isExistUser = await this.AthenticationModal.findOne({ userName });
+  async login(user) {
+    const { username, password } = user;
+
+    let isExistUser = await this.AthenticationModal.findOne({ username });
+
     if (isExistUser) {
       const isMatch = await bcrypt.compare(password, isExistUser.hash);
       if (isMatch) {
@@ -51,15 +53,13 @@ export class AuthenticationService {
     }
   }
 
-  async validateUser(userName: string, pass: string): Promise<any> {
-    const user = await this.AthenticationModal.findOne({ userName });
-    const isMatch = await bcrypt.compare(pass, user.hash);
+  async validateUser(username: string, pass: string): Promise<any> {
+    const user = await this.AthenticationModal.findOne({ username });
+    const isMatch = user && await bcrypt.compare(pass, user.hash);
     if (user && isMatch) {
       const { ...result } = user;
       return result;
     }
     return null;
   }
-
 }
-

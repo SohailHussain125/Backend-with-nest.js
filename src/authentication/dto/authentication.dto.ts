@@ -8,7 +8,7 @@ export class ResgistrationType {
     lastName: string;
 
     @IsNotEmpty()
-    userName: string;
+    username: string;
 
     
     @IsString()
@@ -22,14 +22,14 @@ export class ResponseResgistrationType {
     _id: string;
     firstName: string;
     lastName: string;
-    userName: string;
+    username: string;
     hash?: string
 
 }
 
 export class loginType {
     @IsNotEmpty()
-    userName: string;
+    username: string;
     @IsNotEmpty()
     password: string
 }
@@ -39,5 +39,5 @@ export class loginTypeResponse {
     _id: string;
     firstName: string;
     lastName: string;
-    userName: string;
+    username: string;
 }
