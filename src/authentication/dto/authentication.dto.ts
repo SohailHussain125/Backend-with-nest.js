@@ -23,7 +23,8 @@ export class ResponseResgistrationType {
     firstName: string;
     lastName: string;
     username: string;
-    hash?: string
+    hash?: string;
+    access_token?:string
 
 }
 
@@ -40,4 +41,6 @@ export class loginTypeResponse {
     firstName: string;
     lastName: string;
     username: string;
+    access_token:string
+
 }
