@@ -3,11 +3,13 @@ import { ResponseResgistrationType, ResgistrationType, loginType } from './dto/a
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthenticationService {
   constructor(
-    @InjectModel('Users') private readonly AthenticationModal: Model<ResponseResgistrationType>
+    @InjectModel('Users') private readonly AthenticationModal,
+    private jwtService: JwtService
   ) {
 
   }
@@ -44,7 +46,16 @@ export class AuthenticationService {
     if (isExistUser) {
       const isMatch = await bcrypt.compare(password, isExistUser.hash);
       if (isMatch) {
-        return isExistUser
+        const payload = { username: user.username, sub: user._id, firstName: isExistUser.firstName, lastName: isExistUser.lastName };
+        let access_token = await this.jwtService.sign(payload);
+        let userData = {
+          _id: isExistUser._id,
+          firstName: isExistUser.firstName,
+          lastName: isExistUser.lastName,
+          username: isExistUser.username,
+          access_token: access_token
+        };
+        return userData;
       }
       else throw new NotFoundException(`Invalid user name or password`);
     }

@@ -23,7 +23,6 @@ export class AuthenticationController {
 
 
     // Login end point
-  @UseGuards(AuthGuard('local'))
     @Post('/login')
     login(
         @Body() body: loginType
@@ -55,24 +54,3 @@ export class AuthenticationController {
     }
 
 }
-
-// import { Controller, Request, Post, UseGuards } from '@nestjs/common';
-// import { AuthGuard } from '@nestjs/passport';
-
-// @Controller()
-// export class  AuthenticationController{
-//   @UseGuards(AuthGuard('local'))
-//   @Post('login')
-//   async login(@Body() body) {
-//     return body;
-//   }
-
-// //     // Login end point
-// //   @UseGuards(AuthGuard('local'))
-// //     @Post('/login')
-// //     login(
-// //         @Body() body: loginType
-// //     ): Promise<loginTypeResponse> {
-// //         return this.authenticationService.login(body)
-// //     }
-// }

@@ -5,10 +5,17 @@ import { AuthenticationService } from './authentication.service';
 import { AuthenticationSchema } from './authentication.model';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './local.strategy';
+import { JwtModule } from '@nestjs/jwt';
+import { jwtConstants } from './constants';
+import { JwtStrategy } from './jwt.strategy';
 
 @Module({
-  imports: [PassportModule, MongooseModule.forFeature([{ name: 'Users', schema: AuthenticationSchema }])],
+  imports: [JwtModule.register({
+    secret: jwtConstants.secret,
+    signOptions: { expiresIn: '1m' },
+  }),
+    PassportModule, MongooseModule.forFeature([{ name: 'Users', schema: AuthenticationSchema }])],
   controllers: [AuthenticationController],
-  providers: [AuthenticationService, LocalStrategy],
+  providers: [AuthenticationService, LocalStrategy ,JwtStrategy],
 })
 export class AuthsModule { }
