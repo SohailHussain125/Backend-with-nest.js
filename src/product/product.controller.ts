@@ -1,21 +1,14 @@
-import { Controller, Get, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, Headers, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from './../authentication/jwt-auth.guard';
+import { ProductService } from './product.service';
 
 @Controller('product')
 export class ProductController {
+    constructor(private productService: ProductService) { }
 
     @UseGuards(JwtAuthGuard)
     @Get('all')
-    getAllProduct() {
-        return [
-            {
-                id: "1",
-                name: "Mobile"
-            },
-            {
-                id: "2",
-                name: "Mobile X"
-            }
-        ]
-    }
+    getAllProduct(@Headers() headers) {        
+        return this.productService.getAllProduct()
+     }
 }
