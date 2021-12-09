@@ -1,3 +1,4 @@
+// Secret key for gernerat JWT
 export const jwtConstants = {
-    secret: 'secretKey',
+    secret: 'fc3JrqJfn0kFFccB2TdTflUT8o7J7JsW',
   };
